@@ -47,6 +47,7 @@ struct SubOpBasicMulti : public SubOpBasic {
    virtual string dataToOutStr (DgDataList* data);
    //virtual DgCell* inStrToPointCell (const string& inStr) const;
    virtual DgLocationData* inStrToPointLoc (const string& inStr) const;
+   virtual DgLocationData* inFloatToPointLoc (long double xIn, long double yIn) const;
 
 };
 

@@ -55,8 +55,35 @@ class DgContCartRF : public DgRF<DgDVec2D, long double> {
       virtual const char* str2add (DgDVec2D* add, const char* str,
                                    char delimiter) const
                   {    if (!add) add = new DgDVec2D();
-                   std::cout << "MINKIA1" << std::endl;
-                       return add->fromString(str, delimiter); }
+                    return add->fromString(str, delimiter); }
+    
+    
+      virtual const char* float2add (DgDVec2D* add, long double xIn, long double yIn) const
+        {
+            if (!add) add = new DgDVec2D();
+            return add->fromFloat(xIn, yIn);
+        }
+    
+    
+    virtual const char* fromFloat (DgLocation& loc, long double xIn, long double yIn) const
+    {
+        DgDVec2D add;
+        const char* tmp = float2add(&add, xIn, yIn);
+        if (add == undefAddress())
+        {
+            ::report("DgRF<A, D>::fromFloat() invalid address string ",
+               DgBase::Fatal);
+        }
+
+        DgLocation* tloc = makeLocation(add);
+        loc = *tloc;
+        delete tloc;
+
+        return tmp;
+
+    } 
+    
+    
 
       virtual string dist2str (const long double& dist) const
                        { return dgg::util::to_string(dist, formatStr()); }

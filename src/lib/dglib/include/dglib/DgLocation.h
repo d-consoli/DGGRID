@@ -82,6 +82,9 @@ class DgLocation : public DgLocBase {
 
       virtual const char* fromString (const char* str, char delimiter)
                { return rf().fromString(*this, str, delimiter); }
+    
+      virtual const char* fromFloat (long double xIn, long double yIn)
+               { return rf().fromFloat(*this, xIn, yIn); }
 
       const DgAddressBase*  address  (void) const { return address_; }
 

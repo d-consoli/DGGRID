@@ -101,18 +101,24 @@ SubOpTransform::executeOp (void) {
 
     DgLocationData* loc = nullptr;
 
-    std::string coordsStr = "15.1,23";
-    loc = op.primarySubOp->inStrToPointLoc(coordsStr.c_str());
+    // std::string coordsStr = "15.1,23";
+    
+    long double xIn = 30.1;
+    long double yIn = 12.9;
+    // loc = op.primarySubOp->inStrToPointLoc(coordsStr.c_str());
+    loc = op.primarySubOp->inFloatToPointLoc(xIn, yIn);
 
 
 
-      if (i > 4) break; // reached EOF on last input file
+      if (i > 4) break; 
 #if DGDEBUG
    dgcout << "TRANSFORM BEFORE: " << *loc << endl;
 #endif
 
       //op.outOp.pOutRF->convert(loc);
       dgg.convert(loc);
+      
+      std::cout << loc->dataList();
 
       op.outOp.outputCellAdd2D(*loc, nullptr, loc->dataList());
 

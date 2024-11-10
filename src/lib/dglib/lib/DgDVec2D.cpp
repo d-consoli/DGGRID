@@ -51,8 +51,6 @@ DgDVec2D::operator= (const DgDVec3D& pt)
 const char*
 DgDVec2D::fromString (const char* str, char delimiter)
 {
-      std::cout << "Miaoooooo4" << std::endl;
-    
    char delimStr[2];
    delimStr[0] = delimiter;
    delimStr[1] = '\0';
@@ -84,10 +82,6 @@ DgDVec2D::fromString (const char* str, char delimiter)
    }
 
    setX(xIn);
-      std::cout << "yIn " << double(yIn) <<std::endl;
-      std::cout << "xIn " << double(xIn) <<std::endl;
-    
-    
    setY(yIn);
 
    unsigned long offset = (tok - tmpStr) + strlen(tok) + 1;
@@ -101,15 +95,8 @@ DgDVec2D::fromString (const char* str, char delimiter)
 const char*
 DgDVec2D::fromFloat (long double xIn, long double yIn)
 {
-
-   setX(xIn);
-   setY(yIn);
-    
-      std::cout << "double! yIn " << double(yIn) <<std::endl;
-      std::cout << "double! xIn " << double(xIn) <<std::endl;
-    
-    
-
+    setX(xIn);
+    setY(yIn);
     return 0;
 } // const char* DgDVec2D::fromFloat
 

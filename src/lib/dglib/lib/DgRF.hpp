@@ -303,9 +303,7 @@ DgRF<A, D>::toString (const DgLocation& loc, char delimiter) const
 template <class A, class D> const char*
 DgRF<A, D>::fromString (DgLocation& loc, const char* str, char delimiter) const
 {
-      std::cout << "Miaoooooo!" << std::endl;
    A add;
-    std::cout << "Type of add: " << typeid(add).name() << std::endl;
    const char* tmp = str2add(&add, str, delimiter);
    if (add == undefAddress())
    {
@@ -320,6 +318,17 @@ DgRF<A, D>::fromString (DgLocation& loc, const char* str, char delimiter) const
    return tmp;
 
 } // const char* DgRF<A, D>::fromString
+
+////////////////////////////////////////////////////////////////////////////////
+template <class A, class D> const char*
+DgRF<A, D>::fromFloat (DgLocation& loc, long double xIn, long double yIn) const
+{
+   (void) loc;
+   (void) xIn;
+   (void) yIn;
+   return 0;
+
+} // const char* DgRF<A, D>::fromFloat
 
 ////////////////////////////////////////////////////////////////////////////////
 template <class A, class D> string

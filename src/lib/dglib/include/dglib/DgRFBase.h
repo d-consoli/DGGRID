@@ -185,6 +185,7 @@ class DgRFBase {
                                                                       const = 0;
       virtual const char* fromString (DgLocation& loc, const char* str,
                                       char delimiter) const = 0;
+      virtual const char* fromFloat (DgLocation& loc, long double xIn, long double yIn) const = 0;
 
       int id_;
 

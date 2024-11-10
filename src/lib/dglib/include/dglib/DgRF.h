@@ -90,6 +90,9 @@ template <class A, class D> class DgRF : public DgRFBase {
 
       virtual const char* fromString (DgLocation& loc, const char* str,
                                       char delimiter) const;
+      virtual const char* fromFloat (DgLocation& loc, long double xIn, long double yIn) const;
+    
+    
 
       virtual void jumpRF (DgLocation* loc);
 
