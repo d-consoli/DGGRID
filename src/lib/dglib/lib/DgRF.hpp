@@ -303,7 +303,9 @@ DgRF<A, D>::toString (const DgLocation& loc, char delimiter) const
 template <class A, class D> const char*
 DgRF<A, D>::fromString (DgLocation& loc, const char* str, char delimiter) const
 {
+      std::cout << "Miaoooooo!" << std::endl;
    A add;
+    std::cout << "Type of add: " << typeid(add).name() << std::endl;
    const char* tmp = str2add(&add, str, delimiter);
    if (add == undefAddress())
    {

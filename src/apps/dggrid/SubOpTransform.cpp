@@ -95,10 +95,18 @@ SubOpTransform::executeOp (void) {
    dgcout << "Res " << dgg.outputRes() << " " << dgg.gridStats() << endl;
    dgcout << "\ntransforming values..." << endl;
 
+    int i = 0;
    while (true) {
+   i++;
 
-      DgLocationData* loc = op.inOp.getNextLoc();
-      if (!loc) break; // reached EOF on last input file
+    DgLocationData* loc = nullptr;
+
+    std::string coordsStr = "15.1,23";
+    loc = op.primarySubOp->inStrToPointLoc(coordsStr.c_str());
+
+
+
+      if (i > 4) break; // reached EOF on last input file
 #if DGDEBUG
    dgcout << "TRANSFORM BEFORE: " << *loc << endl;
 #endif

@@ -55,6 +55,7 @@ class DgContCartRF : public DgRF<DgDVec2D, long double> {
       virtual const char* str2add (DgDVec2D* add, const char* str,
                                    char delimiter) const
                   {    if (!add) add = new DgDVec2D();
+                   std::cout << "MINKIA1" << std::endl;
                        return add->fromString(str, delimiter); }
 
       virtual string dist2str (const long double& dist) const

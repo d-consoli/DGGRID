@@ -23,12 +23,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cstring>
-
+#include <typeinfo>
 #include <dglib/DgRandom.h>
 #include <dglib/DgBoundedIDGG.h>
 #include <dglib/DgDataField.h>
 #include <dglib/DgDataList.h>
-
+#include <typeinfo>
 #include "SubOpBasicMulti.h"
 #include "OpBasic.h"
 
@@ -66,8 +66,22 @@ SubOpBasicMulti::inStrToPointLoc (const string& inStr) const {
       remainder = &(buff[strlen(snStr) + 1]);
    } else {
       loc = new DgLocationData(*op.inOp.pInRF);
+      std::cout << "Miaoooooo" << std::endl;
+      
       remainder = loc->fromString(buff, op.inOp.inputDelimiter);
+      
+      std::cout << "Miaoooooo2" << std::endl;
+      
+      
+//       (void) buff;
+//       (void) op.inOp.inputDelimiter;
+//       long double xIn = 12.7;
+//       long double yIn = 11.6;
+      
+//       remainder = loc->fromFloat(xIn, yIn);
+      
    }
+   std::cout << "Type of loc: " << typeid(loc).name() << std::endl;
 
    // skip any whitespace
    while (remainder && isspace(*remainder)) remainder++;

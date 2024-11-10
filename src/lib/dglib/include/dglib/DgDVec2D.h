@@ -77,6 +77,7 @@ class DgDVec2D {
                 { return acosl(dotProd(pt) / (magnitude() * pt.magnitude())); }
 
       const char* fromString (const char* str, char delimiter);
+      const char* fromFloat (long double xIn, long double yIn);
 
       inline DgDVec2D& scale (long double xScaleFactor, long double yScaleFactor);
       inline DgDVec2D& rotate (long double degrees);
