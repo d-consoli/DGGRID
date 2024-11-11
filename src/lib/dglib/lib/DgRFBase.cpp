@@ -259,9 +259,11 @@ DgRFBase::toAddressString (const DgLocBase& lb) const
 string
 DgRFBase::toString (const DgLocBase& lb, char delimiter) const
 {
+    
    return lb.asString(delimiter);
 
 } // string DgRFBase::toString
+
 
 ////////////////////////////////////////////////////////////////////////////////
 string

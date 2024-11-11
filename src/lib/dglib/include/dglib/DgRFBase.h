@@ -176,9 +176,10 @@ class DgRFBase {
       virtual string toAddressString (const DgLocation& loc)     const = 0;
       virtual string toAddressString (const DgLocVector& locVec) const = 0;
 
+      virtual void toNumber (const DgLocation& loc,  int& quadNum, long int& coord_i, long int& coord_j) const = 0;
       virtual string toString (const DgLocation& loc, char delimiter) const = 0;
-      virtual string toString (const DgLocVector& loc, char delimiter)
-                                                                      const = 0;
+      virtual string toString (const DgLocVector& loc, char delimiter) const = 0;
+    
       virtual string toAddressString (const DgLocation& loc, char delimiter)
                                                                       const = 0;
       virtual string toAddressString (const DgLocVector& locVec, char delimiter)

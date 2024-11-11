@@ -72,7 +72,13 @@ class DgLocation : public DgLocBase {
                { return rf().toString(*this); }
 
       virtual string asString (char delimiter) const
-               { return rf().toString(*this, delimiter); }
+               { 
+          return rf().toString(*this, delimiter); }
+    
+    
+      virtual void asNumber (int& quadNum, long int& coord_i, long int& coord_j) const
+               {        
+          return rf().toNumber(*this, quadNum, coord_i, coord_j); }
 
       virtual string asAddressString (void) const
                { return rf().toAddressString(*this); }

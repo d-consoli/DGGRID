@@ -40,104 +40,87 @@
 using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////
-SubOpTransform::SubOpTransform (OpBasic& _op, bool _activate)
-   : SubOpBasicMulti (_op, _activate)
-{
-   // turn-on/off the available sub operations
-   op.mainOp.active = true;
-   op.dggOp.active = true;
-   op.inOp.active = true;
-   op.outOp.active = true;
+SubOpTransform::SubOpTransform(OpBasic& _op, bool _activate)
+    : SubOpBasicMulti(_op, _activate) {
+    // turn-on/off the available sub operations
+    op.mainOp.active = true;
+    op.dggOp.active = true;
+    op.inOp.active = true;
+    op.outOp.active = true;
 
-   op.inOp.isPointInput = true;
+    op.inOp.isPointInput = true;
 
 } // SubOpTransform::SubOpTransform
 
 ////////////////////////////////////////////////////////////////////////////////
-int
-SubOpTransform::initializeOp (void) {
-
-   vector<string*> choices;
-   return 0;
-
+int SubOpTransform::initializeOp(void) {
+    vector<string*> choices;
+    return 0;
 } // int SubOpTransform::initializeOp
 
 ////////////////////////////////////////////////////////////////////////////////
-int
-SubOpTransform::setupOp (void) {
+int SubOpTransform::setupOp(void) {
+    /////// fill state variables from the parameter list //////////
+    string dummy;
 
-   /////// fill state variables from the parameter list //////////
-   string dummy;
-
-   return 0;
-
+    return 0;
 } // int SubOpTransform::setupOp
 
 ////////////////////////////////////////////////////////////////////////////////
-int
-SubOpTransform::cleanupOp (void) {
-
-   return 0;
-
+int SubOpTransform::cleanupOp(void) {
+    return 0;
 } // int SubOpTransform::cleanupOp
 
 ////////////////////////////////////////////////////////////////////////////////
-int
-SubOpTransform::executeOp (void) {
+int SubOpTransform::executeOp(void) {
+    // Transform to GEO doesn't make sense (that would just be the cell point)
+    if (op.outOp.outAddType == dgg::addtype::Geo) {
+        ::report("SubOpTransform::executeOp() output address type must be non-GEO",
+                 DgBase::Fatal);
+    }
 
-   // Transform to GEO doesn't make sense (that would just be the cell point)
-   if (op.outOp.outAddType == dgg::addtype::Geo) {
-      ::report("SubOpTransform::executeOp() output address type must be non-GEO",
-               DgBase::Fatal);
-   }
+    const DgIDGGBase& dgg = op.dggOp.dgg();
+    dgcout << "Res " << dgg.outputRes() << " " << dgg.gridStats() << endl;
+    dgcout << "\ntransforming values..." << endl;
 
-   const DgIDGGBase& dgg = op.dggOp.dgg();
-   dgcout << "Res " << dgg.outputRes() << " " << dgg.gridStats() << endl;
-   dgcout << "\ntransforming values..." << endl;
-
-    int i = 0;
-   while (true) {
-   i++;
-
-    DgLocationData* loc = nullptr;
-
-    // std::string coordsStr = "15.1,23";
     
-    long double xIn = 30.1;
-    long double yIn = 12.9;
-    // loc = op.primarySubOp->inStrToPointLoc(coordsStr.c_str());
-    loc = op.primarySubOp->inFloatToPointLoc(xIn, yIn);
+    std::vector<long double> xIn_vec = {30.1, 30.12334, 11.1, 60.6, 11.1};
+    std::vector<long double> yIn_vec = {30.1, 50.1, 21.1, 0.6543, 21.1};
 
-
-
-      if (i > 4) break; 
-#if DGDEBUG
-   dgcout << "TRANSFORM BEFORE: " << *loc << endl;
-#endif
-
-      //op.outOp.pOutRF->convert(loc);
-      dgg.convert(loc);
-      
-      std::cout << loc->dataList();
-
-      op.outOp.outputCellAdd2D(*loc, nullptr, loc->dataList());
+    for (size_t i = 0; i < xIn_vec.size(); i++)
+    {
+        DgLocationData* loc = nullptr;
+        loc = op.primarySubOp->inFloatToPointLoc(xIn_vec[i], yIn_vec[i]);
 
 #if DGDEBUG
-   dgcout << "TRANSFORM AFTER: " << *loc << endl;
+        dgcout << "TRANSFORM BEFORE: " << *loc << endl;
 #endif
 
-      delete loc;
-   }
+        dgg.convert(loc);
+        int quadNum;
+        long int coord_i;
+        long int coord_j;
+        op.outOp.outputCellNumber(*loc, quadNum, coord_i, coord_j);
 
-   int numFiles = op.inOp.fileNum;
-   dgcout << "\nprocessed " << numFiles << " input file"
-          << ((numFiles > 1) ? "s." : ".") << endl;
-   dgcout << "** transformation complete **" << endl;
+        std::cout << "OUT coord_i: " << coord_i << std::endl;
+        std::cout << "OUT coord_j: " << coord_j << std::endl;
+        std::cout << "OUT quadNum: " << quadNum << std::endl;
 
-   return 0;
+#if DGDEBUG
+        dgcout << "TRANSFORM AFTER: " << *loc << endl;
+#endif
+
+        delete loc;
+    }
+
+    int numFiles = op.inOp.fileNum;
+    dgcout << "\nprocessed " << numFiles << " input file"
+           << ((numFiles > 1) ? "s." : ".") << endl;
+    dgcout << "** transformation complete **" << endl;
+
+    return 0;
 
 } // int SubOpTransform::executeOp
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-

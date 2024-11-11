@@ -65,6 +65,7 @@ struct SubOpOut : public SubOpBasic {
    void genRandPts (const DgQ2DICoord& add2D, const string& label);
    void outputCellAdd2D (const DgLocation& add2D, const string* labelIn = nullptr,
                DgDataList* dataList = nullptr);
+   void outputCellNumber (const DgLocation& add2D, int& quadNum, long int& coord_i, long int& coord_j);
 
    void resetFiles (void);
 

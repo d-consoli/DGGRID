@@ -124,6 +124,18 @@ class DgIDGGBase : public DgDiscRF<DgQ2DICoord, DgGeoCoord, long double> {
         { return dgg::util::to_string(add.quadNum()) + delimiter +
                  dgg::util::to_string(add.coord().i()) + delimiter +
                  dgg::util::to_string(add.coord().j()); }
+    
+    
+      virtual void toNumber (const DgLocation& loc, int& quadNum, long int& coord_i, long int& coord_j) const
+        {
+            const DgQ2DICoord* add = getAddress(loc);
+            quadNum = add->quadNum();
+            coord_i = add->coord().i();
+            coord_j = add->coord().j();
+            return;
+        } // string DgRF<A, D>::toNumber
+
+    
 
       virtual const char* str2add (DgQ2DICoord* add, const char* str,
                                    char delimiter) const;

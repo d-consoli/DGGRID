@@ -252,7 +252,8 @@ SubOpOut::outputCellAdd2D (const DgLocation& add2D, const string* labelIn,
          unsigned long long int sn = op.dggOp.dgg().bndRF().seqNum(add2D);
          label = dgg::util::to_string(sn);
       } else if (useEnumLbl)
-         label = dgg::util::to_string(nCellsAccepted);
+      {
+         label = dgg::util::to_string(nCellsAccepted);}
       else {
          DgLocation tmpLoc(add2D);
          pOutRF->convert(&tmpLoc);
@@ -377,6 +378,16 @@ SubOpOut::outputCellAdd2D (const DgLocation& add2D, const string* labelIn,
    }
 
 } // void SubOpOut::outputCell
+
+void
+SubOpOut::outputCellNumber (const DgLocation& add2D, int& quadNum, long int& coord_i, long int& coord_j)
+{
+ 
+    DgLocation tmpLoc(add2D);
+    pOutRF->convert(&tmpLoc);
+    tmpLoc.asNumber(quadNum, coord_i, coord_j);
+    return;
+} // void SubOpOut::outputCellNumber
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

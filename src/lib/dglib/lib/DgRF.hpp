@@ -275,7 +275,7 @@ DgRF<A, D>::toString (const DgLocation& loc) const
 ////////////////////////////////////////////////////////////////////////////////
 template <class A, class D> string
 DgRF<A, D>::toString (const DgLocation& loc, char delimiter) const
-{
+{    
    string str;
 
    if (loc.rf() != *this)
@@ -298,6 +298,20 @@ DgRF<A, D>::toString (const DgLocation& loc, char delimiter) const
    return str;
 
 } // string DgRF<A, D>::toString
+
+////////////////////////////////////////////////////////////////////////////////
+template <class A, class D> void
+DgRF<A, D>::toNumber (const DgLocation& loc,  int& quadNum, long int& coord_i, long int& coord_j) const
+{
+   (void) loc;
+   (void) quadNum;
+   (void) coord_i;
+   (void) coord_j;
+   report("Method toNumber not implemented for this class.", DgBase::Fatal);
+   return;
+
+} // string DgRF<A, D>::toNumber
+
 
 ////////////////////////////////////////////////////////////////////////////////
 template <class A, class D> const char*
@@ -326,6 +340,7 @@ DgRF<A, D>::fromFloat (DgLocation& loc, long double xIn, long double yIn) const
    (void) loc;
    (void) xIn;
    (void) yIn;
+   report("Method fromFloat not implemented for this class.", DgBase::Fatal);
    return 0;
 
 } // const char* DgRF<A, D>::fromFloat

@@ -81,6 +81,7 @@ template <class A, class D> class DgRF : public DgRFBase {
       virtual string toAddressString (const DgLocation&  loc)    const;
       virtual string toAddressString (const DgLocVector& locVec) const;
 
+      virtual void toNumber (const DgLocation& loc, int& quadNum, long int& coord_i, long int& coord_j) const;
       virtual string toString (const DgLocation& loc, char delimiter) const;
       virtual string toString (const DgLocVector& loc, char delimiter) const;
       virtual string toAddressString (const DgLocation& loc, char delimiter)
