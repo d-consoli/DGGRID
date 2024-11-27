@@ -1,9 +1,13 @@
-cmake_minimum_required (VERSION 3.9)
+cmake_minimum_required(VERSION 3.10)
 
 project (dggrid
   VERSION 8.1
   LANGUAGES C CXX
 )
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 
 find_package(Doxygen)
 
@@ -37,6 +41,8 @@ add_subdirectory(src/lib/proj4lib)
 
 add_subdirectory(src/apps/dggrid)
 add_subdirectory(src/apps/appex)
+# add_subdirectory(src/apps/jlbind)
+
 
 if(DOXYGEN_FOUND)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile.in @ONLY)
@@ -47,3 +53,4 @@ if(DOXYGEN_FOUND)
     COMMENT "Generating API documentation with Doxygen" VERBATIM
   )
 endif(DOXYGEN_FOUND)
+

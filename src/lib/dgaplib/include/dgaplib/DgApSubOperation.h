@@ -27,6 +27,7 @@
 
 #include <string>
 #include <dglib/DgBase.h>
+#include <jlcxx/jlcxx.hpp>
 
 struct DgApOperation;
 
@@ -56,6 +57,7 @@ struct DgApSubOperation {
    // called after setup()
    // this calls executeOp
    virtual int execute (bool force = false);
+   int executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force = false);
 
    // called after execute()
    // this calls cleanupOp
@@ -79,7 +81,20 @@ struct DgApSubOperation {
    protected:
       virtual int initializeOp (void) { return 0; }
       virtual int setupOp      (void) { return 0; }
-      virtual int executeOp    (void) { return 0; }
+      virtual int executeOp    (void) 
+      {
+        std::cout << "Sono proprio stronzo" << std::endl;
+        return -1;
+      }
+      virtual int executeOpJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon) 
+      {
+        (void) lat;
+        (void) lon;
+        std::cout << "Method not implemented" << std::endl;
+        return -1;
+      }
+ 
+          
       virtual int cleanupOp    (void) { return 0; }
 };
 

@@ -41,6 +41,9 @@ struct SubOpTransform : public SubOpBasicMulti {
    virtual int setupOp (void);
    virtual int cleanupOp (void);
    virtual int executeOp (void);
+   virtual int executeOpJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon) override;
+    
+
 
    // the parameters
 

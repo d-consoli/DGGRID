@@ -39,6 +39,7 @@
 
 using namespace std;
 
+
 ////////////////////////////////////////////////////////////////////////////////
 SubOpTransform::SubOpTransform(OpBasic& _op, bool _activate)
     : SubOpBasicMulti(_op, _activate) {
@@ -91,6 +92,53 @@ int SubOpTransform::executeOp(void) {
     {
         DgLocationData* loc = nullptr;
         loc = op.primarySubOp->inFloatToPointLoc(xIn_vec[i], yIn_vec[i]);
+
+#if DGDEBUG
+        dgcout << "TRANSFORM BEFORE: " << *loc << endl;
+#endif
+
+        dgg.convert(loc);
+        int quadNum;
+        long int coord_i;
+        long int coord_j;
+        op.outOp.outputCellNumber(*loc, quadNum, coord_i, coord_j);
+
+        std::cout << "OUT coord_i: " << coord_i << std::endl;
+        std::cout << "OUT coord_j: " << coord_j << std::endl;
+        std::cout << "OUT quadNum: " << quadNum << std::endl;
+
+#if DGDEBUG
+        dgcout << "TRANSFORM AFTER: " << *loc << endl;
+#endif
+
+        delete loc;
+    }
+
+    int numFiles = op.inOp.fileNum;
+    dgcout << "\nprocessed " << numFiles << " input file"
+           << ((numFiles > 1) ? "s." : ".") << endl;
+    dgcout << "** transformation complete **" << endl;
+
+    return 0;
+
+} // int SubOpTransform::executeOp
+
+int SubOpTransform::executeOpJl(jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon) {
+    // Transform to GEO doesn't make sense (that would just be the cell point)
+    if (op.outOp.outAddType == dgg::addtype::Geo) {
+        ::report("SubOpTransform::executeOpJl() output address type must be non-GEO",
+                 DgBase::Fatal);
+    }
+
+    const DgIDGGBase& dgg = op.dggOp.dgg();
+    dgcout << "Res " << dgg.outputRes() << " " << dgg.gridStats() << endl;
+    dgcout << "\ntransforming values..." << endl;
+
+
+    for (size_t i = 0; i < lat.size(); i++)
+    {
+        DgLocationData* loc = nullptr;
+        loc = op.primarySubOp->inFloatToPointLoc(lon[i], lat[i]);
 
 #if DGDEBUG
         dgcout << "TRANSFORM BEFORE: " << *loc << endl;

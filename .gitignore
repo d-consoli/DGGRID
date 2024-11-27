@@ -1,8 +1,9 @@
 # Prerequisites
 *.d
 *.depends
-
+*.ipynb_checkpoints*
 # Build and working directories
+build/
 build/
 xcode/
 examples/WORKING

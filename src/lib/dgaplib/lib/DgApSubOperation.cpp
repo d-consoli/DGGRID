@@ -110,6 +110,25 @@ DgApSubOperation::execute (bool force) {
    return result;
 }
 
+int DgApSubOperation::executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force)
+{
+    if (!active) return 0;
+
+   // don't do if already done
+   if (state >= EXECUTED && !force) return 1;
+
+   int result = executeOpJl(lat, lon);
+
+   // update my state
+   if (!result) {
+     state = EXECUTED;
+     numExecutions++;
+   }
+
+   return result;
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // called after execute()
 int

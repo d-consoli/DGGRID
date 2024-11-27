@@ -101,6 +101,9 @@ SubOpBasicMulti::inFloatToPointLoc (long double xIn, long double yIn) const {
 } // DgLocationData* SubOpBasicMulti::inFloatToPointLoc
 
 
+
+
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 DgCell*
@@ -236,4 +239,68 @@ SubOpBasicMulti::execute (bool force) {
 
 } // SubOpBasicMulti::execute
 
+
+////////////////////////////////////////////////////////////////////////////////
+// override the definition in DgApSubOperation to loop over multiple grids
+int
+SubOpBasicMulti::executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force) {
+
+   if (!active) return 0;
+
+   // don't do if already done
+   if (state >= EXECUTED && !force) return 1;
+
+   // this part differs from DgApSubOperation
+
+   int result = 0;
+
+   // process grids until lastGrid
+   while (true) {
+
+      // the first dgg and all input/output files were already created when the
+      // relevant subops were executed by the main operation
+
+      // keep track of the current random seed so it is output with the plist
+      if (op.dggOp.placeRandom && op.outOp.ptsRand != 0)
+         pList().setParam("randpts_seed",
+           dgg::util::to_string(op.outOp.ptsRand->status()));
+
+      // perform the metafile output if needed; all other output files have been
+      // created by the outOp
+
+      if (op.dggOp.numGrids > 1 || op.dggOp.placeRandom) {
+         ofstream metaOutFile;
+         metaOutFile.open(op.outOp.metaOutFileName.c_str());
+         metaOutFile.setf(ios::fixed, ios::floatfield);
+         metaOutFile.precision(12);
+         metaOutFile << pList();
+         metaOutFile.close();
+      }
+
+      // now do the operation using the current grid
+      int newResult =  executeOpJl(lat, lon);
+      if (newResult) result = newResult;
+
+      // quit if last grid
+      if (op.dggOp.lastGrid) break;
+
+      // create the dgg and output files for the next loop
+      op.dggOp.execute(true);
+      op.outOp.nOutputFile = 0; // needs to be in SubOpOut
+      op.outOp.execute(true);
+   }
+
+   // end of differences from DgApSubOperation
+
+   // update my state
+   if (!result) {
+     state = EXECUTED;
+     numExecutions++;
+   }
+
+   return result;
+
+} // SubOpBasicMulti::execute
+
+////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

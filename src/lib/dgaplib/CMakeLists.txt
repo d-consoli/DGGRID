@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 3.9)
-
+set(JULIA_INCLUDE_DIR "/home/opengeohub/.julia/juliaup/julia-1.11.1+0.x64.linux.gnu/bin/../include/julia")
+set(JULIA_ARTIFACTS_DIR "/home/opengeohub/.julia/artifacts/dee31c8c121f2be2dd7c7b2ec3d41b2be90cc8c7/include")
+include_directories(${JULIA_INCLUDE_DIR} ${JULIA_ARTIFACTS_DIR} )
 add_library(dgaplib
   lib/DgApParamList.cpp
   lib/DgApSubOperation.cpp
