@@ -93,8 +93,12 @@ void run_dggrid (std::string metaFileName, jlcxx::ArrayRef<double,1> lat, jlcxx:
       pause("parameters loaded");
 
    // do the operation
-   theOperation.execute();
-   // theOperation.executeJl(lat, lon);
+    std::cout << " --------------- Prima di theOperation.execute" << std::endl;
+   // theOperation.execute();
+   theOperation.executeJl(lat, lon);
+    
+    std::cout << " --------------- Dopo di theOperation.execute" << std::endl;
+    
 
    // grab the value before the op is cleaned
    bool pauseBeforeExit = theOperation.mainOp.pauseBeforeExit;

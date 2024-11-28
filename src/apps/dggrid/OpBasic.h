@@ -46,8 +46,6 @@ struct OpBasic : public DgApOperationPList {
 
    virtual int initialize (bool force = false);
    virtual int cleanup    (bool force = false);
-   int executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force = false);
-
 
    // sub operation objects; these get added to the list of sub ops
    // (maintained by DgApOperation) by the DgApSubOperation constructor

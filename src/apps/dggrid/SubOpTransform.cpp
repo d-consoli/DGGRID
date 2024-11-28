@@ -132,7 +132,7 @@ int SubOpTransform::executeOpJl(jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<d
 
     const DgIDGGBase& dgg = op.dggOp.dgg();
     dgcout << "Res " << dgg.outputRes() << " " << dgg.gridStats() << endl;
-    dgcout << "\ntransforming values..." << endl;
+    dgcout << "\n THE REAL TRANSFORMING VALUES :)" << endl;
 
 
     for (size_t i = 0; i < lat.size(); i++)

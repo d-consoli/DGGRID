@@ -42,7 +42,7 @@ struct SubOpBasicMulti : public SubOpBasic {
 
    // redefine from DgApSubOperation to loop over multiple grids
    virtual int execute (bool force = false);
-   int executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force = false);
+   virtual int executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force = false) override;
 
    // methods to support lightweight text input/output
    // default loops over the data fields in the list

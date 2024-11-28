@@ -48,7 +48,19 @@ struct DgApOperation {
 
    // default execute executes the subops
    virtual int execute (bool force = false) {
-      return executeAll(force);
+    std::cout << " ###### Prima di DgApOperation.executeAll" << std::endl;
+      int res = executeAll(force);
+    std::cout << " ###### Dopo di DgApOperation.executeAll" << std::endl; 
+       return res;
+   }
+    
+    
+   // default execute executes the subops
+   virtual int executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force = false) {
+    std::cout << " ###### Prima di DgApOperation.executeAllJl" << std::endl;
+      int res = executeAllJl(lat, lon, force);
+    std::cout << " ###### Dopo di DgApOperation.executeAllJl" << std::endl; 
+       return res;
    }
 
    // default cleanup cleans the subops
@@ -82,12 +94,38 @@ struct DgApOperation {
    // execute subops function
    int executeAll (bool force = false) {
       int result = 0;
+       std::cout << " * Prima di DgApOperation.executeAll loop" << std::endl;
+       int i = 0;
       for (auto op: subops) {
+       std::cout << "i " << i << std::endl;
+          i++;        
+          std::cout << "Type " << typeid(op).name() << std::endl;
          int thisResult = op->execute(force);
          if (thisResult) result = thisResult;
       }
+       std::cout << " * Dopo di DgApOperation.executeAll loop" << std::endl;
+       
       return result;
    }
+                          
+                          
+   // execute subops function
+   int executeAllJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force = false) {
+      int result = 0;
+       std::cout << " * Prima di DgApOperation.executeAllJl loop" << std::endl;
+       int i = 0;
+      for (auto op: subops) {
+       std::cout << "i " << i << std::endl;
+          i++;        
+          std::cout << "Type " << typeid(op).name() << std::endl;
+         int thisResult = op->executeJl(lat, lon, force);
+         if (thisResult) result = thisResult;
+      }
+       std::cout << " * Dopo di DgApOperation.executeAllJl loop" << std::endl;
+       
+      return result;
+   }
+
 
    // usually called after execute()
    int cleanupAll (bool force = false) {

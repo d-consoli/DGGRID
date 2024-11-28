@@ -89,15 +89,5 @@ OpBasic::cleanup (bool force)
 }
 
 
-int
-OpBasic::executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force) {
-  int result = 0;
-  for (auto op: subops) {
-     int thisResult = op->executeJl(lat, lon, force);
-     if (thisResult) result = thisResult;
-  }
-  return result;
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////

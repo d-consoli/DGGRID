@@ -57,7 +57,7 @@ struct DgApSubOperation {
    // called after setup()
    // this calls executeOp
    virtual int execute (bool force = false);
-   int executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force = false);
+   virtual int executeJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon, bool force = false);
 
    // called after execute()
    // this calls cleanupOp
@@ -83,15 +83,15 @@ struct DgApSubOperation {
       virtual int setupOp      (void) { return 0; }
       virtual int executeOp    (void) 
       {
-        std::cout << "Sono proprio stronzo" << std::endl;
+        std::cout << "Method DgApSubOperation::executeOp not implemented" << std::endl;
         return -1;
       }
       virtual int executeOpJl (jlcxx::ArrayRef<double,1> lat, jlcxx::ArrayRef<double,1> lon) 
       {
         (void) lat;
         (void) lon;
-        std::cout << "Method not implemented" << std::endl;
-        return -1;
+        std::cout << "Method DgApSubOperation::executeOpJl not implemented, calling DgApSubOperation::executeOp" << std::endl;
+        return executeOp();
       }
  
           
